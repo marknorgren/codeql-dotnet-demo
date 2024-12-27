@@ -19,6 +19,8 @@ The solution consists of three projects:
 
 ## Running the Analysis
 
+### Local Analysis
+
 1. Install the required tools:
    ```bash
    brew install codeql just
@@ -40,6 +42,26 @@ The solution consists of three projects:
    just codeql-init    # Create CodeQL database
    just codeql-analyze # Run security analysis
    ```
+
+### GitHub Actions Integration
+
+The repository includes GitHub Actions workflow for automated CodeQL analysis:
+
+- Triggers:
+  - On push to `main` branch
+  - On pull requests to `main` branch
+  - Weekly schedule (Sunday 1:30 AM UTC)
+
+- Features:
+  - Automated .NET setup
+  - CodeQL initialization and analysis
+  - Results viewable in GitHub Security tab
+  - Configurable via `codeql-config.yml`
+
+To enable:
+1. Push the repository to GitHub
+2. Enable GitHub Actions in repository settings
+3. Enable GitHub Code Scanning alerts
 
 ## Detected Security Issues
 
