@@ -5,6 +5,8 @@ extraction:
     prepare:
       - command: dotnet restore CodeQLDemo.sln
     index:
-      build_command: dotnet build CodeQLDemo.sln
+      build_command: dotnet build CodeQLDemo.sln /p:UseSharedCompilation=false /p:GenerateFullPaths=true /p:UseRoslynAnalyzers=false /p:TreatWarningsAsErrors=false /p:DebugType=full /p:DebugSymbols=true
       buildless: false
-      solution: CodeQLDemo.sln 
+      solution: CodeQLDemo.sln
+      include:
+        - src/**/*.cs 
