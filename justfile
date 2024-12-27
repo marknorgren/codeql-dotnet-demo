@@ -1,17 +1,19 @@
-# justfile
+# List available commands
+default:
+	@just --list
 
-# Clean and build the solution
-build:
-	dotnet clean
-	dotnet build
+# Clean up any existing CodeQL artifacts
+clean:
+	rm -rf codeql_db codeql-results.sarif
 
-# Initialize a CodeQL database
-init_codeql_db:
-	codeql database create codeql_db --language=csharp --command="dotnet build CodeQLDemo.sln /v:detailed" --source-root=. --overwrite
+# Create CodeQL database
+codeql-init:
+	codeql database create codeql_db --language=csharp --source-root=. --overwrite
 
-# Run CodeQL analysis
-analyze:
-	codeql database analyze codeql_db --format=sarif-latest --output=codeql-results.sarif codeql/csharp-queries:codeql-suites/csharp-security-and-quality.qls
+# Run basic security analysis
+codeql-analyze:
+	codeql database analyze codeql_db codeql/csharp-queries:codeql-suites/csharp-security-extended.qls --format=sarif-latest --output=codeql-results.sarif
 
-# Full setup and analysis
-all: build init_codeql_db analyze 
+# Run all steps in sequence
+codeql-all: clean codeql-init codeql-analyze
+	@echo "Analysis complete. Check codeql-results.sarif for findings." 

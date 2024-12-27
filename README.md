@@ -8,6 +8,7 @@ This repository demonstrates the setup and usage of CodeQL for analyzing C# code
 - CodeQL CLI
 - .NET SDK 8.0
 - Visual Studio Code with CodeQL extension (recommended)
+- just (command runner)
 
 ## Project Structure
 
@@ -16,24 +17,28 @@ The solution consists of three projects:
 - `CodeQLDemo.Common`: Common library containing shared functionality
 - `CodeQLDemo.Security`: Security-related functionality
 
-## Setup Process
+## Running the Analysis
 
-1. Clone the repository
-2. Install the required tools:
+1. Install the required tools:
    ```bash
-   brew install codeql
+   brew install codeql just
    ```
-3. Build the solution:
+
+2. List available commands:
    ```bash
-   dotnet build
+   just
    ```
-4. Create the CodeQL database:
+
+3. Run the complete analysis:
    ```bash
-   codeql database create codeql_db --language=csharp --source-root=.
+   just codeql-all
    ```
-5. Run the analysis:
+
+   Or run individual steps:
    ```bash
-   codeql database analyze codeql_db codeql/csharp-queries:codeql-suites/csharp-security-extended.qls --format=sarif-latest --output=codeql-results.sarif
+   just clean          # Clean up previous runs
+   just codeql-init    # Create CodeQL database
+   just codeql-analyze # Run security analysis
    ```
 
 ## Detected Security Issues
