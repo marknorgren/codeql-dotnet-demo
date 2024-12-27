@@ -7,6 +7,10 @@
     <UseSharedCompilation>false</UseSharedCompilation>
     <GenerateFullPaths>true</GenerateFullPaths>
     <UseRoslynAnalyzers>false</UseRoslynAnalyzers>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors></WarningsAsErrors>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>

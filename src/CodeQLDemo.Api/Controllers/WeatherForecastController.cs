@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using CodeQLDemo.Common;
 using CodeQLDemo.Security;
+using CodeQLDemo.Common;
 
 namespace CodeQLDemo.Api.Controllers;
 
@@ -36,17 +36,17 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet("user/{username}")]
-    public IActionResult GetUserWeather(string username)
+    public IActionResult GetUser(string username)
     {
-        // Security issue: Using vulnerable SQL query
+        // Security issue: SQL Injection
         SecurityUtils.ExecuteQuery(username);
 
-        // Security issue: XSS vulnerability
+        // Security issue: XSS
         var formattedUsername = SecurityUtils.FormatUserInput(username);
-        
-        // Quality issue: Unused variable
-        var unusedVariable = DateTime.Now;
 
-        return Ok($"Weather for user: {formattedUsername}");
+        // Security issue: Empty catch block
+        SecurityUtils.ValidateUser(username);
+
+        return Ok(new { username = formattedUsername });
     }
 } 
